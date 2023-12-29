@@ -18,15 +18,33 @@ if(isset($_POST['bsimpan'])){
         alert('isi terlebih dahulu nominal dan tanggalnya!');
         document.location='simpanan.php';
         </script>";
-    }else{
-        $berhasil = mysqli_query($db_connect, $query);
+        die;
+    }
+    if($jenisSimpanan === 'Wajib' && $jumlahSimpanan < 75000){
+        echo "<script>alert('Jumlah Simpanan Wajib minimal adalah 75000');
+        document.location='simpanan.php';
+        </script>";
+        die;
+    
+    }
+    if ($jenisSimpanan === 'Pokok' && $jumlahSimpanan < 20000) {
+        echo "<script>alert('Jumlah Simpanan Pokok minimal adalah 20000');
+        document.location='simpanan.php';
+        </script>";
+        
+    }
+    else{
+        $simpan ;
         echo "<script>
         alert('Simpanan anda berhasil');
         document.location='simpanan.php';
         </script>";
     }
 
+
+
 }
+
 if(isset($_POST['bedit'])){
 
     $idSimpananToEdit = $_POST['ID_Simpanan'];
@@ -39,8 +57,34 @@ if(isset($_POST['bedit'])){
     $query = "UPDATE simpanan SET ID_Anggota = '$idAnggota', Nama_Anggota = '$namaAnggota', Jumlah_Simpanan = '$jumlahSimpanan', Tanggal_Simpanan = '$tanggalSimpanan', Jenis_Simpanan = '$jSimpanan' WHERE ID_Simpanan = '$idSimpananToEdit'";
 
     $resultEditSimpanan = mysqli_query($db_connect, $query);
-    if (!$resultEditSimpanan){die;}
+    if (!$resultEditSimpanan){die;
+    }
 
 }
+if(isset($_POST['bhapus'])){
+    $idSimpanan = $_POST['ID_Simpanan'];
+    $queryDeleteSimpanan = "UPDATE simpanan SET Status_Deleted = 1 WHERE ID_Simpanan = '$idSimpanan'";
+    $hapus = mysqli_query($db_connect, $queryDeleteSimpanan);
+ 
+    if(!$hapus){
+        echo "<script>
+        alert('Hapus data gagal!');
+        document.location='simpanan.php';
+        </script>";
+    }else{
+        $queryTotalSimpanan = "SELECT SUM(Jumlah_Simpanan) as total_simpanan FROM simpanan";
+        $resultTotalSimpanan = mysqli_query($db_connect, $queryTotalSimpanan);
+        $rowTotalSimpanan = mysqli_fetch_assoc($resultTotalSimpanan);
+        $totalSimpananSeluruhAnggota = $rowTotalSimpanan['total_simpanan'];
+    
+        // Simpan total pinjaman dalam session
+        $_SESSION['totalSimpananSeluruhAnggota'] = $totalSimpananSeluruhAnggota;
+        echo "<script>
+        alert('Hapus data berhasil!');
+        document.location='simpanan.php';
+        </script>";
+    }
+}
+
 header("Location:simpanan.php");
 ?>

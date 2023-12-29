@@ -107,13 +107,13 @@ if (isset($_SESSION["email"])) {
             <?php
             } elseif ($role == 'user') {
         // Query untuk menghitung total pinjaman user yang sedang login
-        $queryTotalPinjamanUser = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman_user FROM pinjaman WHERE Nama_Anggota = '$username'";
+        $queryTotalPinjamanUser = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman_user FROM pinjaman WHERE Nama_Anggota = '$username' AND Status_Deleted = 0";
         $resultTotalPinjamanUser = mysqli_query($db_connect, $queryTotalPinjamanUser);
         $rowTotalPinjamanUser = mysqli_fetch_assoc($resultTotalPinjamanUser);
         $totalPinjamanUser = $rowTotalPinjamanUser['total_pinjaman_user'];
 
         // Query untuk menghitung total simpanan user yang sedang login
-        $queryTotalSimpananUser = "SELECT SUM(Jumlah_Simpanan) as total_simpanan_user FROM simpanan WHERE Nama_Anggota = '$username'";
+        $queryTotalSimpananUser = "SELECT SUM(Jumlah_Simpanan) as total_simpanan_user FROM simpanan WHERE Nama_Anggota = '$username' AND Status_Deleted = 0";
         $resultTotalSimpananUser = mysqli_query($db_connect, $queryTotalSimpananUser);
         $rowTotalSimpananUser = mysqli_fetch_assoc($resultTotalSimpananUser);
         $totalSimpananUser = $rowTotalSimpananUser['total_simpanan_user'];

@@ -13,9 +13,9 @@ $role = $_SESSION['role'];
 
 // Query to fetch pinjaman data based on user role
 if ($role === 'admin') {
-    $query = "SELECT * FROM simpanan";
+    $query = "SELECT * FROM simpanan WHERE Status_Deleted = 0";
 } else {
-    $query = "SELECT * FROM simpanan WHERE Nama_Anggota = '$username'";
+    $query = "SELECT * FROM simpanan WHERE Status_Deleted = 0 AND Nama_Anggota = '$username'";
 }
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
@@ -103,7 +103,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSimpan<?= $row['ID_Simpanan'] ?>">
                                 Edit
                                 </button>  |
-                                    <a href='smpan_hapus.php?id=<?= $row['ID_Simpanan'] ?>'>Hapus</a>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Simpanan'] ?>">
+                                Hapus
+                                </button>
                                 </td>
                             <?php endif; ?>
                         </tr>
@@ -158,17 +160,19 @@ while ($row = mysqli_fetch_assoc($result)) {
                         </div>
                     </div>
                 </div>
+                
                  <!-- modal delete -->
-            <div class="modal fade" id="deleteModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div class="modal fade" id="deleteModal<?= $row['ID_Simpanan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Pinjaman'] ?>">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Simpanan'] ?>">Modal title</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="aksi_pinjaman.php" method="POST">
+                    <form action="aksi_simpanan.php" method="POST">
                     <div>
-                        <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
+                        <input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>">
                     </div>
                     <div class="modal-body">
                             Apakah anda yakin menghapus data pinjaman?

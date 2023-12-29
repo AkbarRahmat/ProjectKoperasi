@@ -106,7 +106,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <td><?= $row['Nama_Anggota'] ?></td>
                         <td>Rp<?= $row['Jumlah_Pinjaman'] ?></td>
                         <td><?= $row['Tanggal_Pinjaman'] ?></td>
-                        <td><?= $row['Status'] ?></td>
+                        <td><?= $row['Status'] ?></td> 
 
                         <?php if ($role === 'admin'): ?>
                         <td>
