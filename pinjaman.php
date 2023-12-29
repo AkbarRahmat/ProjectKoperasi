@@ -270,8 +270,6 @@ function atOption($status, $value) {
     $attrib = ($status == $value) ? "selected" : "";
     return "value='$value' $attrib";
 }
-?>
 
-<?php
 mysqli_close($db_connect);
 ?>

@@ -28,7 +28,7 @@ if (isset($_SESSION['username'])) {
     $namaAnggota = $user_info['Nama'];
 
     // Check if the latest loan is paid
-    $query_latest_loan = "SELECT Status FROM simpanan WHERE ID_Anggota = '$idAnggota' ORDER BY Tanggal_Simpanan DESC LIMIT 1";
+    $query_latest_loan = "SELECT Jenis_Simpanan FROM simpanan WHERE ID_Anggota = '$idAnggota' ORDER BY Tanggal_Simpanan DESC LIMIT 1";
     $result_latest_loan = mysqli_query($db_connect, $query_latest_loan);
 
     
@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
 }
 $result = mysqli_query($db_connect, $query);
 
-$dataSinjaman = [];
+$dataSimpanan = [];
 while ($row = mysqli_fetch_assoc($result)) {
     array_push($dataSimpanan, $row);
 }
@@ -89,7 +89,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <?php endif; ?>
                     </tr>
 
-                    <?php foreach ($dataPinjaman as $row): ?>
+                    <?php foreach ($dataSimpanan as $row): ?>
                         <tr>
                             <td><?= $row['ID_Simpanan'] ?></td>
                             <td><?= $row['ID_Anggota'] ?></td>
@@ -100,7 +100,9 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                             <?php if ($role === 'admin'): ?>
                                 <td>
-                                    <a href='smpan_edit.php?id=<?= $row['ID_Simpanan'] ?>'>Edit</a> |
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSimpan<?= $row['ID_Simpanan'] ?>">
+                                Edit
+                                </button>  |
                                     <a href='smpan_hapus.php?id=<?= $row['ID_Simpanan'] ?>'>Hapus</a>
                                 </td>
                             <?php endif; ?>
@@ -137,22 +139,20 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     <td><input type="date" name="Tanggal_Simpanan" value="<?= $row['Tanggal_Simpanan'] ?>" required></td>
                                 </tr>
                                 <tr>
-                                    <td>Status:</td>
+                                    <td>Jenis Simpanan:</td>
                                     <td>
-                                        <select name="Status" required>
-                                            <option <?= atOption($row['Status'], "Diajukan") ?>>Diajukan</option>
-                                            <option <?= atOption($row['Status'], "Disetujui") ?>>Disetujui</option>
-                                            <option <?= atOption($row['Status'], "Ditolak") ?>>Ditolak</option>
-                                            <option <?= atOption($row['Status'], "Dibayar") ?>>Dibayar</option>
-                                        
+                                        <select name="Jenis_Simpanan" required>
+                                            <option <?= atOption($row['Jenis_Simpanan'], "Pokok") ?>>Pokok</option>
+                                            <option <?= atOption($row['Jenis_Simpanan'], "Sukarela") ?>>Sukarela</option>
+                                            <option <?= atOption($row['Jenis_Simpanan'], "Wajib") ?>>Wajib</option>
                                         </select>
                                     </td>
                                 </tr>
                             </table>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger"    data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary"   name="bedit">edit</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="bedit">edit</button>
                             </div>
                         </form>
                         </div>
@@ -259,5 +259,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 </html>
 
 <?php
+
+function atOption($jsimpanan, $value) {
+    $attrib = ($jsimpanan == $value) ? "selected" : "";
+    return "value='$value' $attrib";
+}
 mysqli_close($db_connect);
 ?>

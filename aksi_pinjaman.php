@@ -49,13 +49,12 @@ if(isset($_POST['bpinjam'])){
     }
  
 }
-$query_enum = "SHOW COLUMNS FROM pinjaman LIKE 'Status'";
-$result_enum = mysqli_query($db_connect, $query_enum);
-$row_enum = mysqli_fetch_assoc($result_enum);
-$enum_values = explode("','", substr($row_enum['Type'], 6, -2));
+// $query_enum = "SHOW COLUMNS FROM pinjaman LIKE 'Status'";
+// $result_enum = mysqli_query($db_connect, $query_enum);
+// $row_enum = mysqli_fetch_assoc($result_enum);
+// $enum_values = explode("','", substr($row_enum['Type'], 6, -2));
 
 if(isset($_POST['bedit'])){
-    var_dump($_POST);
 
     $idPinjamanToEdit = $_POST['ID_Pinjaman'];
     $idAnggota = $_POST['ID_Anggota'];

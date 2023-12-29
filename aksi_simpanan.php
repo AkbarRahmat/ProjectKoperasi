@@ -27,5 +27,20 @@ if(isset($_POST['bsimpan'])){
     }
 
 }
+if(isset($_POST['bedit'])){
 
+    $idSimpananToEdit = $_POST['ID_Simpanan'];
+    $idAnggota = $_POST['ID_Anggota'];
+    $namaAnggota = $_POST['Nama_Anggota'];
+    $jumlahSimpanan = $_POST['Jumlah_Simpanan'];
+    $tanggalSimpanan = $_POST['Tanggal_Simpanan'];
+    $jSimpanan = $_POST['Jenis_Simpanan'];
+
+    $query = "UPDATE simpanan SET ID_Anggota = '$idAnggota', Nama_Anggota = '$namaAnggota', Jumlah_Simpanan = '$jumlahSimpanan', Tanggal_Simpanan = '$tanggalSimpanan', Jenis_Simpanan = '$jSimpanan' WHERE ID_Simpanan = '$idSimpananToEdit'";
+
+    $resultEditSimpanan = mysqli_query($db_connect, $query);
+    if (!$resultEditSimpanan){die;}
+
+}
+header("Location:simpanan.php");
 ?>

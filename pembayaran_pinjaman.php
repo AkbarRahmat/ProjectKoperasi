@@ -12,6 +12,8 @@ require_once "./config/db.php";
     <title>Pembayaran Pinjaman</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
     <style>
         body {
             display: flex;
@@ -79,7 +81,7 @@ require_once "./config/db.php";
         $query_insert_payment = "INSERT INTO pembayaran_pinjaman (ID_Pinjaman, Nominal_Pembayaran, Tanggal_Pembayaran) VALUES ('{$latest_loan['ID_Pinjaman']}', '$nominal_pembayaran', NOW())";
         mysqli_query($db_connect, $query_insert_payment);
     
-        header("Location: pinjaman.php?success=payment_success");
+        header("Location: pinjaman.php");
         exit();
     }
     ?>
@@ -111,15 +113,12 @@ require_once "./config/db.php";
         <br>
         <a href="pinjaman.php">Kembali ke Data Pinjaman</a>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    // Activate the "Pembayaran Pinjaman" link in the sidebar using JavaScript
-    document.querySelectorAll('.nav-link')[3].classList.add('active');
-</script>
 </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </html>
-
 <?php
 mysqli_close($db_connect);
 ?>
+
+
