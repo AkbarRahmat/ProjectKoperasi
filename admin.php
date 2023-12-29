@@ -7,6 +7,5 @@
 </head>
 <body>
     <h1>Welcome to Admin Profile</h1>
-    <p>Hello Git</p>
 </body>
 </html>
