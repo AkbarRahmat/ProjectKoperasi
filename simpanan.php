@@ -28,6 +28,10 @@ if (isset($_SESSION['username'])) {
     $namaAnggota = $user_info['Nama'];
 
     // Check if the latest loan is paid
+    $query_latest_loan = "SELECT Status FROM simpanan WHERE ID_Anggota = '$idAnggota' ORDER BY Tanggal_Simpanan DESC LIMIT 1";
+    $result_latest_loan = mysqli_query($db_connect, $query_latest_loan);
+
+    
 
     // skip
 } else {
@@ -36,27 +40,11 @@ if (isset($_SESSION['username'])) {
     exit();
 }
 $result = mysqli_query($db_connect, $query);
-/*$query = "";
-$role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 
-// Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    // Redirect to the login page or handle the case when the user is not logged in
-    header("Location: login.php");
-    exit();
+$dataSinjaman = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    array_push($dataSimpanan, $row);
 }
-
-// Get the username of the logged-in user
-$username = $_SESSION['username'];
-
-// Query to fetch simpanan data based on user role
-if ($role === 'admin') {
-    $query = "SELECT * FROM simpanan";
-} else {
-    $query = "SELECT * FROM simpanan WHERE Nama_Anggota = '$username'";
-}
-
-$result = mysqli_query($db_connect, $query);*/
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +89,7 @@ $result = mysqli_query($db_connect, $query);*/
                         <?php endif; ?>
                     </tr>
 
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                    <?php foreach ($dataPinjaman as $row): ?>
                         <tr>
                             <td><?= $row['ID_Simpanan'] ?></td>
                             <td><?= $row['ID_Anggota'] ?></td>
@@ -117,17 +105,91 @@ $result = mysqli_query($db_connect, $query);*/
                                 </td>
                             <?php endif; ?>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                         
                 </table>
             </div>
+            <div>
+                <?php foreach ($dataSimpanan as $row) : ?>
+                <div class="modal fade" id="editSimpan<?= $row['ID_Simpanan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="editSimpan<?= $row['ID_Simpanan'] ?>">Simpan</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="POST" action="aksi_simpanan.php">
+                            <table>
+                                <tr>
+                                    <td><input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>"></td>
+                                    <td><input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
+                                </tr>
+                                <tr>
+                                    <td>Nama Anggota:</td>
+                                    <td><input type="text" name="Nama_Anggota" value="<?= $row['Nama_Anggota'] ?>" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Jumlah Simpanan:</td>
+                                    <td><input type="text" name="Jumlah_Simpanan" value="<?= $row['Jumlah_Simpanan'] ?>" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Simpanan:</td>
+                                    <td><input type="date" name="Tanggal_Simpanan" value="<?= $row['Tanggal_Simpanan'] ?>" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td>
+                                        <select name="Status" required>
+                                            <option <?= atOption($row['Status'], "Diajukan") ?>>Diajukan</option>
+                                            <option <?= atOption($row['Status'], "Disetujui") ?>>Disetujui</option>
+                                            <option <?= atOption($row['Status'], "Ditolak") ?>>Ditolak</option>
+                                            <option <?= atOption($row['Status'], "Dibayar") ?>>Dibayar</option>
+                                        
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger"    data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary"   name="bedit">edit</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                 <!-- modal delete -->
+            <div class="modal fade" id="deleteModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Pinjaman'] ?>">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="aksi_pinjaman.php" method="POST">
+                    <div>
+                        <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
+                    </div>
+                    <div class="modal-body">
+                            Apakah anda yakin menghapus data pinjaman?
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
+                    </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+                <?php endforeach; ?>
+            </div>
             <?php if ($role === 'user'): ?>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Tambah Simpanan
                 </button>
 
-                <!-- Modal -->
+                <!-- Modal tambah simpanan -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
