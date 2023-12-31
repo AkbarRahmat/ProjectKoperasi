@@ -125,7 +125,8 @@ while ($row = mysqli_fetch_assoc($result)) {
             <!-- Modal Edit -->
             <div>
                 <?php foreach ($dataPinjaman as $row) : ?>
-                <div class="modal fade" id="editModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editModal<?= $row['
+                '] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -267,7 +268,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <?php
 function atOption($status, $value) {
-    $attrib = ($status == $value) ? "selected" : "";
+    $attrib = ($status  == $value) ? "selected" : "";
     return "value='$value' $attrib";
 }
 
