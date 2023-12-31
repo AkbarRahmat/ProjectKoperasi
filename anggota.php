@@ -96,7 +96,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
                             Edit
-                            </button> 
+                            </button> |
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
+                            Edit
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -160,8 +163,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     <td>Status Anggota:</td>
                                     <td>
                                         <select name="Status" required>
-                                            <option value= <?= atOption($row['Status'],'Aktif') ?>>Aktif</option>
-                                            <option value= <?= atOption($row['Status'],'Non-Aktif') ?>>Non Aktif</option>
+                                            <option <?= atOption($row['Status'],'Aktif') ?>>Aktif</option>
+                                            <option <?= atOption($row['Status'],'Non-Aktif') ?>>Non Aktif</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -174,25 +177,26 @@ while ($row = mysqli_fetch_assoc($result)) {
                      </div>
                  </div>
              </div>
-              <!-- modal delete 
-         <div class="modal fade" id="deleteModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <!-- modal delete --> 
+         <div class="modal fade" id="deleteModal<?= $row['ID_Anggota'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
              <div class="modal-dialog">
                  <div class="modal-content">
                  <div class="modal-header">
-                     <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Pinjaman'] ?>">Modal title</h1>
+                     <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Anggota'] ?>">Modal title</h1>
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                  </div>
-                 <form action="aksi_pinjaman.php" method="POST">
+                 <form action="aksi_dataAnggota.php" method="POST">
                  <div>
-                     <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
+                     <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
                  </div>
                  <div class="modal-body">
-                         Apakah anda yakin menghapus data pinjaman?
-                     
+                         Apakah anda yakin menghapus data pinjaman? 
                  </div>
                  </form>
                  </div>
-                </div>-->
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                </div>
              </div>
              <?php endforeach; ?>
          </div>
