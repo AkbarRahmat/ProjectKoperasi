@@ -9,36 +9,26 @@ if(isset($_POST['bsimpan'])){
     $namaAnggota = $_POST['Nama_Anggota'];
     $jenisSimpanan = $_POST['Jenis_Simpanan'];
     
-    $query = "INSERT INTO `simpanan` (`ID_Anggota`, `Jumlah_Simpanan`, `Tanggal_Simpanan`, `Nama_Anggota`, `Jenis_Simpanan`) 
-    VALUES ('$idAnggota','$jumlahSimpanan','$tanggalSimpanan','$namaAnggota','$jenisSimpanan')";
-    $simpan = mysqli_query($db_connect, $query);
+    // $query = "INSERT INTO simpanan (`ID_Anggota`, `Jumlah_Simpanan`, `Tanggal_Simpanan`, `Nama_Anggota`, `Jenis_Simpanan`) 
+    // VALUES ('$idAnggota','$jumlahSimpanan','$tanggalSimpanan','$namaAnggota','$jenisSimpanan')";
+    // $simpan = mysqli_query($db_connect, $query);
 
-    if(!$query){
-        "<script>
-        alert('isi terlebih dahulu nominal dan tanggalnya!');
-        document.location='simpanan.php';
+    if ($jenisSimpanan === 'Wajib' && $jumlahSimpanan < 75000) {
+        echo "<script>alert('Jumlah Simpanan Wajib minimal adalah 75 ribu.');
+        document.location='simpanan.php'
         </script>";
-        die;
-    }
-    if($jenisSimpanan === 'Wajib' && $jumlahSimpanan < 75000){
-        echo "<script>alert('Jumlah Simpanan Wajib minimal adalah 75000');
-        document.location='simpanan.php';
+        exit();
+    } 
+    elseif ($jenisSimpanan === 'Pokok' && $jumlahSimpanan < 20000) {
+        echo "<script>alert('Jumlah Simpanan Pokok minimal adalah 20 ribu.');
+        document.location='simpanan.php'
         </script>";
-        die;
-    
-    }
-    if ($jenisSimpanan === 'Pokok' && $jumlahSimpanan < 20000) {
-        echo "<script>alert('Jumlah Simpanan Pokok minimal adalah 20000');
-        document.location='simpanan.php';
-        </script>";
-        
-    }
-    else{
-        $simpan ;
-        echo "<script>
-        alert('Simpanan anda berhasil');
-        document.location='simpanan.php';
-        </script>";
+        exit();
+    } else {
+        $query = "INSERT INTO simpanan (ID_Anggota, Jumlah_Simpanan, Tanggal_Simpanan, Nama_Anggota, Jenis_Simpanan) VALUES ('$idAnggota', '$jumlahSimpanan', '$tanggalSimpanan','$namaAnggota' ,'$jenisSimpanan')";
+        mysqli_query($db_connect, $query);
+        header("Location: simpanan.php");
+        exit();
     }
 
 

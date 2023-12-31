@@ -103,7 +103,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSimpan<?= $row['ID_Simpanan'] ?>">
                                 Edit
                                 </button>  |
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Simpanan'] ?>">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Simpanan'] ?>">
                                 Hapus
                                 </button>
                                 </td>
@@ -153,8 +153,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                             </table>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" name="bedit">edit</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
                             </div>
                         </form>
                         </div>

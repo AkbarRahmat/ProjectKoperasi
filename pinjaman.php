@@ -165,8 +165,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                             </table>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger"    data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary"   name="bedit">edit</button>
+                                <button type="button" class="btn btn-danger"    data-bs-dismiss="modal">Kembali</button>
                             </div>
                         </form>
                         </div>
@@ -189,8 +189,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
                         <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
                     </div>
                     </form>
                     </div>
