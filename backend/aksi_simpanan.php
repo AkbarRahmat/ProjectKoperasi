@@ -1,6 +1,6 @@
 <?php 
 
-include "./config/db.php";
+include "../config/db.php";
 
 if(isset($_POST['bsimpan'])){
     $idAnggota = $_POST['ID_Anggota'];
@@ -15,19 +15,19 @@ if(isset($_POST['bsimpan'])){
 
     if ($jenisSimpanan === 'Wajib' && $jumlahSimpanan < 75000) {
         echo "<script>alert('Jumlah Simpanan Wajib minimal adalah 75 ribu.');
-        document.location='simpanan.php'
+        document.location='../simpanan.php'
         </script>";
         exit();
     } 
     elseif ($jenisSimpanan === 'Pokok' && $jumlahSimpanan < 20000) {
         echo "<script>alert('Jumlah Simpanan Pokok minimal adalah 20 ribu.');
-        document.location='simpanan.php'
+        document.location='../simpanan.php'
         </script>";
         exit();
     } else {
         $query = "INSERT INTO simpanan (ID_Anggota, Jumlah_Simpanan, Tanggal_Simpanan, Nama_Anggota, Jenis_Simpanan) VALUES ('$idAnggota', '$jumlahSimpanan', '$tanggalSimpanan','$namaAnggota' ,'$jenisSimpanan')";
         mysqli_query($db_connect, $query);
-        header("Location: simpanan.php");
+        header("Location: ../simpanan.php");
         exit();
     }
 
@@ -59,7 +59,7 @@ if(isset($_POST['bhapus'])){
     if(!$hapus){
         echo "<script>
         alert('Hapus data gagal!');
-        document.location='simpanan.php';
+        document.location='../simpanan.php';
         </script>";
     }else{
         $queryTotalSimpanan = "SELECT SUM(Jumlah_Simpanan) as total_simpanan FROM simpanan";
@@ -71,10 +71,10 @@ if(isset($_POST['bhapus'])){
         $_SESSION['totalSimpananSeluruhAnggota'] = $totalSimpananSeluruhAnggota;
         echo "<script>
         alert('Hapus data berhasil!');
-        document.location='simpanan.php';
+        document.location='../simpanan.php';
         </script>";
     }
 }
 
-header("Location:simpanan.php");
+header("Location:../simpanan.php");
 ?>

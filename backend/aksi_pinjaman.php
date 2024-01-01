@@ -1,6 +1,6 @@
 <?php
 
-include "./config/db.php";
+include "../config/db.php";
 
 if(isset($_POST['bpinjam'])){
     $idAnggota = $_POST['ID_Anggota'];
@@ -21,14 +21,14 @@ if(isset($_POST['bpinjam'])){
         $totalSimpananUser = $totalSimpananUser - $jumlahPinjaman;
         echo "<script>
         alert('Lakukan simpanan wajib dengan nominal Rp 75000!');
-        document.location='pinjaman.php';
+        document.location='../pinjaman.php';
         </script>";
         die;
 
     }   if(!$tanggalPinjaman){
         echo "<script>
         alert('Pinjaman anda berhasil!');
-        document.location='pinjaman.php';
+        document.location='../pinjaman.php';
         </script>";
         die;
     }
@@ -36,7 +36,7 @@ if(isset($_POST['bpinjam'])){
     if (!$data_wajib_simpanan){
         echo "<script>
         alert('Lakukan simpanan wajib terlebih dahulu!');
-        document.location='pinjaman.php';
+        document.location='../pinjaman.php';
         </script>";
     }else {
         $query = "INSERT INTO `pinjaman` (ID_Anggota, Nama_Anggota, Jumlah_Pinjaman, Tanggal_Pinjaman) VALUES ('$idAnggota', '$namaAnggota', '$jumlahPinjaman', '$tanggalPinjaman')";
@@ -44,7 +44,7 @@ if(isset($_POST['bpinjam'])){
     $berhasil = mysqli_query($db_connect, $query);
         echo "<script>
         alert('Pinjaman anda berhasil!');
-        document.location='pinjaman.php';
+        document.location='../pinjaman.php';
         </script>";
     }
  
@@ -79,7 +79,7 @@ if(isset($_POST['bhapus'])){
     if(!$hapus){
         echo "<script>
         alert('Hapus data gagal!');
-        document.location='pinjaman.php';
+        document.location='../pinjaman.php';
         </script>";
     }else{
         $queryTotalPinjaman = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman FROM pinjaman";
@@ -91,10 +91,10 @@ if(isset($_POST['bhapus'])){
         $_SESSION['totalPinjamanSeluruhAnggota'] = $totalPinjamanSeluruhAnggota;
         echo "<script>
         alert('Hapus data berhasil!');
-        document.location='pinjaman.php';
+        document.location='../pinjaman.php';
         </script>";
     }
 }
 
-header("Location:pinjaman.php");
+header("Location:../pinjaman.php");
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-include "./config/db.php";
+include "../config/db.php";
 
 if (isset($_POST['bedit'])) {
     $idAnggota = $_POST['ID_Anggota'];
@@ -26,7 +26,10 @@ if (isset($_POST['bedit'])) {
         // Tambahkan pesan kesalahan yang lebih deskriptif
         die("Error updating record: " . mysqli_error($db_connect));
     } else {
-        echo "Record updated successfully";
+        echo "<script>
+        alert('Edit data berhasil!');
+        document.location='../anggota.php';
+        </script>";
     }
 }
 if(isset($_POST['bhapus'])){
@@ -37,12 +40,12 @@ if(isset($_POST['bhapus'])){
     if(!$hapus){
         echo "<script>
         alert('Hapus data gagal!');
-        document.location='anggota.php';
+        document.location='../anggota.php';
         </script>";
     }else{
         echo "<script>
         alert('Hapus data berhasil!');
-        document.location='anggota.php';
+        document.location='../anggota.php';
         </script>";
     }
 }
