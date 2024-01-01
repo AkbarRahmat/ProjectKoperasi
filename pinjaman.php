@@ -133,7 +133,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <h1 class="modal-title fs-5" id="editModal<?= $row['ID_Pinjaman'] ?>">Pinjam</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="POST" action="aksi_pinjaman.php">
+                        <form method="POST" action="./backend/aksi_pinjaman.php">
                             <table>
                                 <tr>
                                     <td><input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>"></td>
@@ -181,7 +181,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Pinjaman'] ?>">Modal title</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="aksi_pinjaman.php" method="POST">
+                    <form action="./backend/aksi_pinjaman.php" method="POST">
                     <div>
                         <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
                     </div>
@@ -214,7 +214,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Pinjam</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form method="POST" action="aksi_pinjaman.php">
+                            <form method="POST" action="./backend/aksi_pinjaman.php">
                                 <div class="modal-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

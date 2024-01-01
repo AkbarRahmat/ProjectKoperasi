@@ -117,7 +117,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                          <h1 class="modal-title fs-5" id="editModal<?= $row['ID_Anggota'] ?>">Pinjam</h1>
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
-                            <form method="POST" action="aksi_dataAnggota.php">
+                            <form method="POST" action="./backend/aksi_dataAnggota.php">
                             <table>
                                 <tr>
                                     <td>ID Anggota:</td>
@@ -186,7 +186,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                      <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Anggota'] ?>">Modal title</h1>
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                  </div>
-                 <form action="aksi_dataAnggota.php" method="POST">
+                 <form action="./backend/aksi_dataAnggota.php" method="POST">
                  <div>
                      <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
                  </div>
