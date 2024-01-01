@@ -9,8 +9,10 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Fetch data from the database
-$query = "SELECT * FROM anggota";
+$query = "SELECT * FROM anggota WHERE Status_Deleted = 0";
+
 $result = mysqli_query($db_connect, $query);
+
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
@@ -96,9 +98,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
                             Edit
-                            </button> |
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
-                            Edit
+                            </button> |<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
+                            Hapus
                             </button>
                         </td>
                     </tr>
@@ -192,10 +193,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                  <div class="modal-body">
                          Apakah anda yakin menghapus data pinjaman? 
                  </div>
+                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
                  </form>
                  </div>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                   
                 </div>
              </div>
              <?php endforeach; ?>
