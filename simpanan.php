@@ -11,19 +11,24 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 
+// Fetch user-specific data
+$query_user_info = "SELECT ID_Anggota, Nama FROM anggota WHERE Username = '$username'";
+$result_user_info = mysqli_query($db_connect, $query_user_info);
+$user_info = mysqli_fetch_assoc($result_user_info);
+$idAnggota = $user_info['ID_Anggota'];
 // Query to fetch pinjaman data based on user role
 if ($role === 'admin') {
     $query = "SELECT * FROM simpanan WHERE Status_Deleted = 0";
 } else {
-    $query = "SELECT * FROM simpanan WHERE Status_Deleted = 0 AND Nama_Anggota = '$username'";
+    $query = "SELECT * FROM simpanan WHERE Status_Deleted = 0 AND ID_Anggota = '$idAnggota' ORDER BY Tanggal_Simpanan DESC";
 }
+
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 
     $query_user_info = "SELECT ID_Anggota, Nama FROM anggota WHERE Username = '$username'";
     $result_user_info = mysqli_query($db_connect, $query_user_info);
     $user_info = mysqli_fetch_assoc($result_user_info);
-
     $idAnggota = $user_info['ID_Anggota'];
     $namaAnggota = $user_info['Nama'];
 
