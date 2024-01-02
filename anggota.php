@@ -183,7 +183,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 </div>
                                 <div class="col-md-10 mx-auto p-2">
                                     <label class="form-label">Password:</label>
-                                    <input type="number" class="form-control" name="Password"value="<?= $row['Password'] ?>" required>
+                                    <input type="text" class="form-control" name="Password"value="<?= $row['Password'] ?>" required>
                                 </div>
                                 <div class="col-md-10 mx-auto p-2">  
                                     <label class="form-label">Status Anggota:</label>
