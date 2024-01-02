@@ -1,0 +1,26 @@
+html, body{
+    background-color: #96EFFF;
+}
+.form-login-user{
+    padding: 8px;
+}
+.login-form{
+    background-color: white;
+    border-radius: 15px;
+    margin: 90px auto;
+    }
+
+.login .form-group{
+    padding: 12px;
+}
+.login input{
+    font-size: large;
+}
+.register{
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 50px;
+    width: max-content;
+    height: max-content;
+}
+
