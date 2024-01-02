@@ -26,7 +26,7 @@ if (isset($_SESSION['username'])) {
 
     $query_latest_loan = "SELECT Status FROM anggota WHERE ID_Anggota = '$idAnggota' ORDER BY Create_Date DESC LIMIT 1";
     $result_latest_loan = mysqli_query($db_connect, $query_latest_loan);
-}else {
+} else {
     // Redirect to the login page or handle the case when the user is not logged in
     header("Location: login.php");
     exit();
@@ -41,6 +41,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -51,19 +52,21 @@ while ($row = mysqli_fetch_assoc($result)) {
         body {
             display: flex;
             flex-direction: row;
-                }
-        .container{
-            display:inline-block
+        }
+
+        .container {
+            display: inline-block
         }
     </style>
 </head>
+
 <body>
     <?php
-    require_once"./component/sidebar.php";
+    require_once "./component/sidebar.php";
     Sidebar::selection("anggota") ?>
-    
+
     <div class="container">
-    <h2>Data Anggota</h2>
+        <h2>Data Anggota</h2>
         <div class="card shadow mb-4">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -83,128 +86,150 @@ while ($row = mysqli_fetch_assoc($result)) {
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($dataAnggota as $row) :?>
-                    <tr>
-                        <td><?= $row['ID_Anggota'] ?></td>
-                        <td><?= $row['Nama'] ?></td>
-                        <td><?= $row['Alamat'] ?></td>
-                        <td><?= $row['Tanggal_Lahir'] ?></td>
-                        <td><?= $row['NIK'] ?></td>
-                        <td><?= $row['Gender'] ?></td>
-                        <td><?= $row['No_Telepon'] ?></td>
-                        <td><?= $row['Email'] ?></td>
-                        <td><?= $row['Password'] ?></td>
-                        <td><?= $row['Status'] ?></td>
-                        <td>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
-                            Edit
-                            </button> |<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
-                            Hapus
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-                <?php endforeach; ?>
+                        <?php foreach ($dataAnggota as $row): ?>
+                            <tr>
+                                <td>
+                                    <?= $row['ID_Anggota'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Nama'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Alamat'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Tanggal_Lahir'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['NIK'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Gender'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['No_Telepon'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Email'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Password'] ?>
+                                </td>
+                                <td>
+                                    <?= $row['Status'] ?>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
+                                        Edit
+                                    </button> |<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <?php endforeach; ?>
                 </table>
             </div>
             <!-- edit -->
-             <div>
-             <?php foreach ($dataAnggota as $row) : ?>
-             <div class="modal fade" id="editModal<?= $row['ID_Anggota'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                 <div class="modal-dialog">
-                     <div class="modal-content">
-                     <div class="modal-header">
-                         <h1 class="modal-title fs-5" id="editModal<?= $row['ID_Anggota'] ?>">Pinjam</h1>
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                            <form method="POST" action="./backend/aksi_dataAnggota.php">
-                            <table>
-                                <tr>
-                                    <td>ID Anggota:</td>
-                                    <td><input type="number" name="ID_Anggota" value="<?= $row['ID_Anggota']?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Nama:</td>
-                                    <td><input type="text" name="Nama" value="<?= $row['Nama']?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat:</td>
-                                    <td><input type="text" name="Alamat" value="<?= $row['Alamat']?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Lahir:</td>
-                                    <td><input type="date" name="Tanggal_Lahir" value="<?= $row['Tanggal_Lahir'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>NIK:</td>
-                                    <td><input type="text" name="NIK" value="<?= $row['NIK'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Gender:</td>
-                                    <td>
-                                        <select name="Gender" required>
-                                            <option <?= atOption($row['Gender'], "Laki-laki")  ?>>Laki-laki</option>
-                                            <option <?= atOption($row['Gender'], "Perempuan") ?>>Perempuan</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>No Telepon:</td>
-                                    <td><input type="text" name="No_Telepon" value="<?= $row['No_Telepon']?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td><input type="text" name="Email" value="<?= $row['Email'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Password:</td>
-                                    <td><input type="text" name="Password" value="<?= $row['Password'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Status Anggota:</td>
-                                    <td>
-                                        <select name="Status" required>
-                                            <option <?= atOption($row['Status'],'Aktif') ?>>Aktif</option>
-                                            <option <?= atOption($row['Status'],'Non-Aktif') ?>>Non Aktif</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bedit">Edit</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
-                 </div>
-                        </form>
-                     </div>
-                 </div>
-             </div>
-              <!-- modal delete --> 
-         <div class="modal fade" id="deleteModal<?= $row['ID_Anggota'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-             <div class="modal-dialog">
-                 <div class="modal-content">
-                 <div class="modal-header">
-                     <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Anggota'] ?>">Modal title</h1>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                 <form action="./backend/aksi_dataAnggota.php" method="POST">
-                 <div>
-                     <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
-                 </div>
-                 <div class="modal-body">
-                         Apakah anda yakin menghapus data pinjaman? 
-                 </div>
-                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
-                 </form>
-                 </div>
-                   
-                </div>
-             </div>
-             <?php endforeach; ?>
-         </div>
+            <div>
+                <?php foreach ($dataAnggota as $row): ?>
+                    <div class="modal fade" id="editModal<?= $row['ID_Anggota'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editModal<?= $row['ID_Anggota'] ?>">Pinjam</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="POST" action="./backend/aksi_dataAnggota.php">
+
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">ID Anggota:</label>
+                                    <input type="number" class="form-control" name="ID_Anggota"value="<?= $row['ID_Anggota'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">Nama:</label>
+                                    <input type="text" class="form-control" name="Nama"value="<?= $row['Nama'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">Alamat:</label>
+                                    <input type="text" class="form-control" name="Alamat"value="<?= $row['Alamat'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">Tanggal Lahir:</label>
+                                    <input type="date" class="form-control" name="Tanggal_Lahir"value="<?= $row['Tanggal_Lahir'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">NIK:</label>
+                                    <input type="number" class="form-control" name="NIK"value="<?= $row['NIK'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">Jenis kelamin:</label>
+                                    <select name="Gender" required>
+                                        <option <?= atOption($row['Gender'], "Laki-laki") ?>>Laki-laki</option>
+                                        <option <?= atOption($row['Gender'], "Perempuan") ?>>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">No Telepon:</label>
+                                    <input type="number" class="form-control" name="No_Telepon"value="<?= $row['No_Telepon'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">Email:</label>
+                                    <input type="email" class="form-control" name="Email"value="<?= $row['Email'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">
+                                    <label class="form-label">Password:</label>
+                                    <input type="number" class="form-control" name="Password"value="<?= $row['Password'] ?>" required>
+                                </div>
+                                <div class="col-md-10 mx-auto p-2">  
+                                    <label class="form-label">Status Anggota:</label>
+                                    <select name="Status" required>
+                                        <option <?= atOption($row['Status'], 'Aktif') ?>>Aktif</option>
+                                        <option <?= atOption($row['Status'], 'Non-Aktif') ?>>Non Aktif</option>
+                                    </select>
+                                </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bedit">Edit</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal delete -->
+                    <div class="modal fade" id="deleteModal<?= $row['ID_Anggota'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Anggota'] ?>">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="./backend/aksi_dataAnggota.php" method="POST">
+                                    <div>
+                                        <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah anda yakin menghapus data pinjaman?
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                        name="bhapus">Hapus</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-                    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -212,14 +237,16 @@ while ($row = mysqli_fetch_assoc($result)) {
         const myInput = document.getElementById('myInput')
 
         myModal.addEventListener('shown.bs.modal', () => {
-        myInput.focus()
+            myInput.focus()
         })
 
     </script>
 </body>
+
 </html>
 <?php
-function atOption($status, $value) {
+function atOption($status, $value)
+{
     $attrib = ($status == $value) ? "selected" : "";
     return "value='$value' $attrib";
 }

@@ -61,6 +61,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,19 +71,21 @@ while ($row = mysqli_fetch_assoc($result)) {
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
     <style>
-        body{
+        body {
             display: flex;
             flex-direction: row;
         }
-        .container{
+
+        .container {
             display: inline-block;
         }
     </style>
 </head>
+
 <body>
-    <?php require_once"./component/sidebar.php"; 
-    Sidebar::selection("pinjaman");?>
-    
+    <?php require_once "./component/sidebar.php";
+    Sidebar::selection("pinjaman"); ?>
+
 
     <div class="container">
         <h2>Data Pinjaman</h2>
@@ -100,114 +103,126 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <?php endif; ?>
                     </tr>
 
-                    <?php foreach ($dataPinjaman as $row) :?>
-                    <tr>
-                        <td><?= $row['ID_Anggota'] ?></td>
-                        <td><?= $row['Nama_Anggota'] ?></td>
-                        <td>Rp<?= $row['Jumlah_Pinjaman'] ?></td>
-                        <td><?= $row['Tanggal_Pinjaman'] ?></td>
-                        <td><?= $row['Status'] ?></td> 
+                    <?php foreach ($dataPinjaman as $row): ?>
+                        <tr>
+                            <td>
+                                <?= $row['ID_Anggota'] ?>
+                            </td>
+                            <td>
+                                <?= $row['Nama_Anggota'] ?>
+                            </td>
+                            <td>Rp
+                                <?= $row['Jumlah_Pinjaman'] ?>
+                            </td>
+                            <td>
+                                <?= $row['Tanggal_Pinjaman'] ?>
+                            </td>
+                            <td>
+                                <?= $row['Status'] ?>
+                            </td>
 
-                        <?php if ($role === 'admin'): ?>
-                        <td>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['ID_Pinjaman'] ?>">
-                            Edit
-                            </button> |
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Pinjaman'] ?>">Hapus</button>
-                        </td>
+                            <?php if ($role === 'admin'): ?>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editModal<?= $row['ID_Pinjaman'] ?>">
+                                        Edit
+                                    </button> |
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal<?= $row['ID_Pinjaman'] ?>">Hapus</button>
+                                </td>
                             <?php endif; ?>
-                    </tr>
+                        </tr>
                     <?php endforeach; ?>
                 </table>
             </div>
-           
+
 
             <!-- Modal Edit -->
             <div>
-                <?php foreach ($dataPinjaman as $row) : ?>
-                <div class="modal fade" id="editModal<?= $row['
-                '] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editModal<?= $row['ID_Pinjaman'] ?>">Pinjam</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST" action="./backend/aksi_pinjaman.php">
-                            <table>
-                                <tr>
-                                    <td><input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>"></td>
-                                    <td><input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
-                                </tr>
-                                <tr>
-                                    <td>Nama Anggota:</td>
-                                    <td><input type="text" name="Nama_Anggota" value="<?= $row['Nama_Anggota'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Jumlah Pinjaman:</td>
-                                    <td><input type="text" name="Jumlah_Pinjaman" value="<?= $row['Jumlah_Pinjaman'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Pinjaman:</td>
-                                    <td><input type="date" name="Tanggal_Pinjaman" value="<?= $row['Tanggal_Pinjaman'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Status:</td>
-                                    <td>
-                                        <select name="Status" required>
-                                            <option <?= atOption($row['Status'], "Diajukan") ?>>Diajukan</option>
-                                            <option <?= atOption($row['Status'], "Disetujui") ?>>Disetujui</option>
-                                            <option <?= atOption($row['Status'], "Ditolak") ?>>Ditolak</option>
-                                            <option <?= atOption($row['Status'], "Dibayar") ?>>Dibayar</option>
-                                        
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
+                <?php foreach ($dataPinjaman as $row): ?>
+                    <div class="modal fade" id="editModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editModal<?= $row['ID_Pinjaman'] ?>">Pinjam</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form class="row g-3" method="POST" action="./backend/aksi_pinjaman.php">
 
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"   name="bedit">edit</button>
-                                <button type="button" class="btn btn-danger"    data-bs-dismiss="modal">Kembali</button>
+                                    <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>"></td>
+                                    <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
+
+                                    <div class="col-md-10 mx-auto p-2">
+                                        <label class="form-label">Jumlah pinjaman:</label>
+                                        <input type="number" class="form-control" name="Jumlah_Pinjaman"
+                                            value="<?= $row['Jumlah_Pinjaman'] ?>" required>
+                                    </div>
+                                    <div class="col-md-10 mx-auto p-2">
+                                        <label class="form-label">Tanggal pinjaman:</label>
+                                        <input type="date" class="form-control" name="Tanggal_Pinjaman"
+                                            value="<?= $row['Tanggal_Pinjaman'] ?>" required>
+                                    </div>
+                                    <div class="col-md-10 mx-auto p-2">
+                                        <label class="form-label">Status Pinjaman:</label>
+                                        <select class="form-select" name="Status">
+                                            <option  <?= atOption($row['Status'], "Diajukan") ?>>Diajukan</option>
+                                            <option  <?= atOption($row['Status'], "Disetujui") ?>>Disetujui</option>
+                                            <option  <?= atOption($row['Status'], "Ditolak") ?>>Ditolak</option>
+                                            <option  <?= atOption($row['Status'], "Dibayar") ?>>Dibayar</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" name="bedit">edit</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Kembali</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
                         </div>
                     </div>
-                </div>
-                 <!-- modal delete -->
-            <div class="modal fade" id="deleteModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Pinjaman'] ?>">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <!-- modal delete -->
+                    <div class="modal fade" id="deleteModal<?= $row['ID_Pinjaman'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Pinjaman'] ?>">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="./backend/aksi_pinjaman.php" method="POST">
+                                    <div>
+                                        <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah anda yakin menghapus data pinjaman?
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                            name="bhapus">Hapus</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Kembali</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <form action="./backend/aksi_pinjaman.php" method="POST">
-                    <div>
-                        <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
-                    </div>
-                    <div class="modal-body">
-                            Apakah anda yakin menghapus data pinjaman?
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
-                    </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
                 <?php endforeach; ?>
             </div>
-                        
+
             <!-- Button trigger modal -->
-                <?php if ($role === 'user'): ?>
+            <?php if ($role === 'user'): ?>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Pinjam sekarang?
+                    Pinjam sekarang?
                 </button>
 
-            <!-- Modal pinjam-->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <!-- Modal pinjam-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -221,13 +236,15 @@ while ($row = mysqli_fetch_assoc($result)) {
                                             <tr>
                                                 <td>ID Anggota:</td>
                                                 <td>
-                                                    <input type="text" name="ID_Anggota" value="<?php echo $idAnggota; ?>" readonly>
+                                                    <input type="text" name="ID_Anggota" value="<?php echo $idAnggota; ?>"
+                                                        readonly>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Nama Anggota:</td>
                                                 <td>
-                                                    <input type="text" name="Nama_Anggota" value="<?php echo $namaAnggota; ?>" readonly>
+                                                    <input type="text" name="Nama_Anggota"
+                                                        value="<?php echo $namaAnggota; ?>" readonly>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -249,8 +266,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                         </div>
                     </div>
                 </div>
-        </div>
-                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -259,16 +276,18 @@ while ($row = mysqli_fetch_assoc($result)) {
         const myInput = document.getElementById('myInput')
 
         myModal.addEventListener('shown.bs.modal', () => {
-        myInput.focus()
+            myInput.focus()
         })
 
     </script>
 </body>
+
 </html>
 
 <?php
-function atOption($status, $value) {
-    $attrib = ($status  == $value) ? "selected" : "";
+function atOption($status, $value)
+{
+    $attrib = ($status == $value) ? "selected" : "";
     return "value='$value' $attrib";
 }
 

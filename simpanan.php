@@ -31,7 +31,7 @@ if (isset($_SESSION['username'])) {
     $query_latest_loan = "SELECT Jenis_Simpanan FROM simpanan WHERE ID_Anggota = '$idAnggota' ORDER BY Tanggal_Simpanan DESC LIMIT 1";
     $result_latest_loan = mysqli_query($db_connect, $query_latest_loan);
 
-    
+
 
     // skip
 } else {
@@ -49,6 +49,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,9 +69,10 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
     </style>
 </head>
+
 <body>
-    <?php require_once"./component/sidebar.php"; 
-    Sidebar::selection("simpanan");?>
+    <?php require_once "./component/sidebar.php";
+    Sidebar::selection("simpanan"); ?>
 
     <div class="container">
         <h2>Data Simpanan</h2>
@@ -91,101 +93,114 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                     <?php foreach ($dataSimpanan as $row): ?>
                         <tr>
-                            <td><?= $row['ID_Simpanan'] ?></td>
-                            <td><?= $row['ID_Anggota'] ?></td>
-                            <td><?= $row['Nama_Anggota'] ?></td>
-                            <td> Rp<?= $row['Jumlah_Simpanan'] ?></td>
-                            <td><?= $row['Tanggal_Simpanan'] ?></td>
-                            <td><?= $row['Jenis_Simpanan'] ?></td>
+                            <td>
+                                <?= $row['ID_Simpanan'] ?>
+                            </td>
+                            <td>
+                                <?= $row['ID_Anggota'] ?>
+                            </td>
+                            <td>
+                                <?= $row['Nama_Anggota'] ?>
+                            </td>
+                            <td> Rp
+                                <?= $row['Jumlah_Simpanan'] ?>
+                            </td>
+                            <td>
+                                <?= $row['Tanggal_Simpanan'] ?>
+                            </td>
+                            <td>
+                                <?= $row['Jenis_Simpanan'] ?>
+                            </td>
 
                             <?php if ($role === 'admin'): ?>
                                 <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editSimpan<?= $row['ID_Simpanan'] ?>">
-                                Edit
-                                </button>  |
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row['ID_Simpanan'] ?>">
-                                Hapus
-                                </button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editSimpan<?= $row['ID_Simpanan'] ?>">
+                                        Edit
+                                    </button> |
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal<?= $row['ID_Simpanan'] ?>">
+                                        Hapus
+                                    </button>
                                 </td>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
-                        
+
                 </table>
             </div>
             <div>
-                <?php foreach ($dataSimpanan as $row) : ?>
-                <div class="modal fade" id="editSimpan<?= $row['ID_Simpanan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editSimpan<?= $row['ID_Simpanan'] ?>">Simpan</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST" action="./backend/aksi_simpanan.php">
-                            <table>
-                                <tr>
-                                    <td><input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>"></td>
-                                    <td><input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
-                                </tr>
-                                <tr>
-                                    <td>Nama Anggota:</td>
-                                    <td><input type="text" name="Nama_Anggota" value="<?= $row['Nama_Anggota'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Jumlah Simpanan:</td>
-                                    <td><input type="text" name="Jumlah_Simpanan" value="<?= $row['Jumlah_Simpanan'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Simpanan:</td>
-                                    <td><input type="date" name="Tanggal_Simpanan" value="<?= $row['Tanggal_Simpanan'] ?>" required></td>
-                                </tr>
-                                <tr>
-                                    <td>Jenis Simpanan:</td>
-                                    <td>
-                                        <select name="Jenis_Simpanan" required>
+                <?php foreach ($dataSimpanan as $row): ?>
+                    <div class="modal fade" id="editSimpan<?= $row['ID_Simpanan'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editSimpan<?= $row['ID_Simpanan'] ?>">Simpan</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="POST" action="./backend/aksi_simpanan.php">
+                                    <input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>"></td>
+                                    <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
+
+                                    <div class="col-md-10 mx-auto p-2">
+                                        <label class="form-label">Jumlah Simpanan:</label>
+                                        <input type="number" class="form-control" name="Jumlah_Simpanan"
+                                            value="<?= $row['Jumlah_Simpanan'] ?>" required>
+                                    </div>
+                                    <div class="col-md-10 mx-auto p-2">
+                                        <label class="form-label">Tanggal Simpanan:</label>
+                                        <input type="date" class="form-control" name="Tanggal_Simpanan"
+                                            value="<?= $row['Tanggal_Simpanan'] ?>" required>
+                                    </div>
+
+                                    <div class="col-md-10 mx-auto p-2">
+                                        <label class="form-label">Status Simpanan:</label>
+                                        <select class="form-select" name="Jenis_Simpanan">
                                             <option <?= atOption($row['Jenis_Simpanan'], "Pokok") ?>>Pokok</option>
                                             <option <?= atOption($row['Jenis_Simpanan'], "Sukarela") ?>>Sukarela</option>
                                             <option <?= atOption($row['Jenis_Simpanan'], "Wajib") ?>>Wajib</option>
                                         </select>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="bedit">edit</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" name="bedit">edit</button>
+                                        <button type="button" class="btn btn-danger"data-bs-dismiss="modal">Kembali</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
                         </div>
                     </div>
-                </div>
-                
-                 <!-- modal delete -->
 
-            <div class="modal fade" id="deleteModal<?= $row['ID_Simpanan'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Simpanan'] ?>">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <!-- modal delete -->
+
+                    <div class="modal fade" id="deleteModal<?= $row['ID_Simpanan'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Simpanan'] ?>">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="./backend/aksi_simpanan.php" method="POST">
+                                    <div>
+                                        <input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>">
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah anda yakin menghapus data pinjaman?
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Kembali</button>
+                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                            name="bhapus">Hapus</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <form action="./backend/aksi_simpanan.php" method="POST">
-                    <div>
-                        <input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>">
-                    </div>
-                    <div class="modal-body">
-                            Apakah anda yakin menghapus data pinjaman?
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="bhapus">Hapus</button>
-                    </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
                 <?php endforeach; ?>
             </div>
             <?php if ($role === 'user'): ?>
@@ -194,7 +209,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </button>
 
                 <!-- Modal tambah simpanan -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -207,13 +223,15 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         <tr>
                                             <td>ID Anggota:</td>
                                             <td>
-                                                <input type="text" name="ID_Anggota" value="<?php echo $idAnggota; ?>" readonly>
+                                                <input type="text" name="ID_Anggota" value="<?php echo $idAnggota; ?>"
+                                                    readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Nama Anggota:</td>
                                             <td>
-                                                <input type="text" name="Nama_Anggota" value="<?php echo $namaAnggota; ?>" readonly>
+                                                <input type="text" name="Nama_Anggota" value="<?php echo $namaAnggota; ?>"
+                                                    readonly>
                                             </td>
                                         </tr>
                                         <tr>
@@ -239,14 +257,14 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
-                                    <button type="submit" class="btn btn-primary" name="bsimpan" >Simpan</button>
+                                    <button type="submit" class="btn btn-primary" name="bsimpan">Simpan</button>
                                 </div>
-                            </form>                         
+                            </form>
                         </div>
                     </div>
                 </div>
-        </div>
-    <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -260,11 +278,13 @@ while ($row = mysqli_fetch_assoc($result)) {
         })
     </script>
 </body>
+
 </html>
 
 <?php
 
-function atOption($jsimpanan, $value) {
+function atOption($jsimpanan, $value)
+{
     $attrib = ($jsimpanan == $value) ? "selected" : "";
     return "value='$value' $attrib";
 }
