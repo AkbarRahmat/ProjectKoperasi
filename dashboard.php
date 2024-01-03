@@ -17,12 +17,9 @@ if (isset($_SESSION["email"])) {
         <title>Dashboard</title>
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
+        <link rel="stylesheet" href="./component/css/style-media.css">
+        
         <style>
-            body {
-                display: flex;
-                flex-direction: row;
-            }
-
             .col-xl-3 {
                 position: relative;
                 width: 30%;

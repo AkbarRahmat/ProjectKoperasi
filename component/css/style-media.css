@@ -1,0 +1,20 @@
+
+@media (min-width: 768px) {
+    #mobile-template {
+        display: none; /* Sembunyikan template untuk smartphone pada tampilan desktop */
+    }
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+    .container {
+        display: inline-block;
+    }
+}
+
+/* Gaya khusus untuk smartp hone */
+@media (max-width: 767px) {
+    #desktop-template {
+        display: none; /* Sembunyikan template untuk desktop pada tampilan smartphone */
+    }
+}
