@@ -18,7 +18,6 @@ if (isset($_SESSION["email"])) {
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
         <link rel="stylesheet" href="./component/css/style-media.css">
-        
         <style>
             .col-xl-3 {
                 position: relative;

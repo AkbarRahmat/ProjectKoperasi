@@ -1,15 +1,17 @@
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    display: inline-block;
+}
 
 @media (min-width: 768px) {
     #mobile-template {
         display: none; /* Sembunyikan template untuk smartphone pada tampilan desktop */
     }
-    body {
-        display: flex;
-        flex-direction: row;
-    }
-    .container {
-        display: inline-block;
-    }
+ 
 }
 
 /* Gaya khusus untuk smartp hone */
@@ -17,4 +19,26 @@
     #desktop-template {
         display: none; /* Sembunyikan template untuk desktop pada tampilan smartphone */
     }
+    .mobile{
+        min-height: 100vh;
+    }
+    <hr>
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle "
+                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ri-user-3-fill "></i>
+                    <strong>
+                        <?= $username ?>
+                    </strong>
+                </a>
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                    <li><a class="dropdown-item" href="./profile.php">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="./login.php">Sign out</a></li>
+                </ul>
+            </div> 
+
 }
+

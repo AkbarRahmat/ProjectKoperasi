@@ -42,6 +42,8 @@ main .image img{
 
 main .card{
     width: 30%;
+    background-color: transparent;
+    border: none;
     border-radius: 20px;
     margin-left: 30px;
     display: flex;
@@ -55,6 +57,7 @@ main .card{
 
 main .card h1{
     font-size: 70px;
+    font-weight: 900;
 }
 
 main .card .login{
@@ -101,7 +104,8 @@ main .card .register:hover{
 @media screen and (max-width: 850px){
     body{
         background: rgb(255,255,255);
-        background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(87,223,255,1) 100%);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(204,245,255,1) 10%, rgba(170,239,255,1) 50%, rgba(204,245,255,1) 90%, rgba(255,255,255,1) 100%);
+        background-size: cover;
     }
 
 header{
@@ -144,7 +148,7 @@ main .card{
 }
 
 main .card h1{
-    font-size: 70px;
+    font-size: 50px;
 }
 
 main .card .login{
@@ -156,7 +160,7 @@ main .card .login{
 }
 
 main .card .register{
-    font-size: 20px;
+    font-size: 18px;
     width: 100%;
     text-align: center;
     text-decoration: none;
