@@ -13,9 +13,20 @@ require_once "./config/db.php";
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./component/css/style-media.css">
+    <link rel="stylesheet" href="./component/css/style-pembayaran.css">
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
+    <header>        
+        <h1>Koperasi <span>Wiatakarya Sejahtera</span></h1>
+    </header>
+    
+    <main>
     <?php
     require_once "./component/sidebar.php";
     Sidebar::selection("pembayaran_pinjaman");
@@ -47,10 +58,10 @@ require_once "./config/db.php";
 
     if (!$result_latest_loan || mysqli_num_rows($result_latest_loan) == 0) {
         // No unpaid loan found
-        echo "<div>Tidak ada pinjaman yang harus dibayar</div>";
-        echo "<br>";
-        echo "<br>";
-        echo "<a href='profile.php'>Back</a>";
+        echo "<script>
+        alert('Tidak ada pinjaman yang harus dibayar!');
+        document.location='dashboard.php';
+        </script>";
         exit();
     }
 
@@ -58,10 +69,10 @@ require_once "./config/db.php";
 
     if ($latest_loan['Status'] != 'Disetujui') {
         // The loan is not approved yet; payment form not allowed
-        echo "<div>Pembayaran tidak dapat dilakukan karena status pinjaman belum disetujui.</div>";
-        echo "<br>";
-        echo "<br>";
-        echo "<a href='profile.php'>Back</a>";
+        echo "<script>
+        alert('Pembayaran tidak dapat dilakukan karena status pinjaman terakhir belum disetujui!');
+        document.location='dashboard.php';
+        </script>";
         exit();
     }
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -80,33 +91,37 @@ require_once "./config/db.php";
     }
     ?>
 
-    <div>
+    <div class="container">
         <h2>Pembayaran Pinjaman</h2>
 
-        <form method="POST" action="">
-            <table>
-                <tr>
-                    <td>Tanggal Peminjaman:</td>
-                    <td><?php echo $latest_loan['Tanggal_Pinjaman']; ?></td>
-                </tr>
-                <tr>
-                    <td>Jumlah Pinjaman:</td>
-                    <td><?php echo $latest_loan['Jumlah_Pinjaman']; ?></td>
-                </tr>
-                <tr>
-                    <td>Nominal Pembayaran:</td>
-                    <td><input type="text" name="nominal_pembayaran" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Bayar"></td>
-                </tr>
-            </table>
-        </form>
-
-
-        <br>
-        <a href="pinjaman.php">Kembali ke Data Pinjaman</a>
+        <div class="card shadow mb-4">
+            <div class="pembayaran">
+                <form method="POST" action="">
+                    <table>
+                        <tr>
+                            <td>Tanggal Peminjaman</td>
+                            <td><?php echo $latest_loan['Tanggal_Pinjaman']; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Jumlah Pinjaman</td>
+                            <td><?php echo $latest_loan['Jumlah_Pinjaman']; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Nominal Pembayaran</td>
+                            <td><input type="text" name="nominal_pembayaran" required></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input class="button" type="submit" value="Bayar"></td>
+                        </tr>
+                    </table>
+                </form>
+                <br>
+                <a href="pinjaman.php">Kembali ke Data Pinjaman</a>
+            </div>
+        </div>
     </div>
+
+    </main>
 </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

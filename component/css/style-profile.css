@@ -2,7 +2,6 @@ body{
     background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(99,226,255,1) 100%);
     background-size:cover ;
-    width: 100%;
 }
 main{
     display: flex;
@@ -11,6 +10,11 @@ main{
 
 main h2{
     font-weight: 700;
+}
+
+.card{
+    background-color: white;
+    padding: 20px;
 }
 
 header{
@@ -27,6 +31,48 @@ header h1{
 header span{
     color: #0080ff;
 }
+
+table tr td{
+    padding: 5px 10px 5px 0;
+}
+
+main p,td{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.fitur{
+    display: flex;
+    justify-content: space-around;
+}
+
+main a{
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.logout{
+    display: flex;
+    justify-content: center;
+}
+
+.logout a{
+    background-color: #0080ff;
+    color: white;
+    width: 50%;
+    padding: 15px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.logout a:hover{
+    background-color: #64b2ff;
+    color: white;
+    box-shadow: 0 0 10px 1px #0080ff;
+}
+
 @media (min-width: 768px) {
     #mobile-template {
         display: none; /* Sembunyikan template untuk smartphone pada tampilan desktop */
@@ -46,7 +92,6 @@ header span{
     #desktop-template {
         display: none; /* Sembunyikan template untuk desktop pada tampilan smartphone */
     }
-    
     body {
         display: flex;
         flex-direction: column;

@@ -2,7 +2,6 @@ body{
     background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(99,226,255,1) 100%);
     background-size:cover ;
-    width: 100%;
 }
 main{
     display: flex;
@@ -27,6 +26,54 @@ header h1{
 header span{
     color: #0080ff;
 }
+
+.card{
+    width: 50%;
+}
+
+.pembayaran{
+    padding: 50px 0;
+}
+
+.pembayaran form{
+    display: flex;
+    justify-content: center;
+}
+
+.pembayaran form table tr td{
+    padding: 5px 10px;
+    font-size: 18px; 
+    font-weight: 600;
+}
+
+.pembayaran form table tr:nth-child(4) td{
+    text-align: center;
+}
+
+.pembayaran a{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px; 
+    font-weight: 700;
+}
+
+.pembayaran form table tr td .button{
+    font-size: 18px; 
+    font-weight: 600;
+    margin-top: 30px;
+    padding: 15px;
+    width: 50%;
+    background-color: #0080ff;
+    border: none;
+    border-radius: 10px; 
+}
+
+.pembayaran form table tr td .button:hover{
+    background-color: #0070e0;
+}
+
+
 @media (min-width: 768px) {
     #mobile-template {
         display: none; /* Sembunyikan template untuk smartphone pada tampilan desktop */
@@ -38,6 +85,7 @@ header span{
     .container {
         display: inline-block;
     }
+    
      
 }
 
@@ -46,7 +94,6 @@ header span{
     #desktop-template {
         display: none; /* Sembunyikan template untuk desktop pada tampilan smartphone */
     }
-    
     body {
         display: flex;
         flex-direction: column;
