@@ -53,7 +53,7 @@
                                 placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control form-control-user w-100" id="username"
+                            <input type="text" class="form-control form-control-user w-100" id="username"
                                 name="username" placeholder="Username">
                         </div>
                         <div class="form-group">
@@ -61,7 +61,7 @@
                                 id="password" placeholder="Password">
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-login btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary btn-login btn-block" name="regis">Register</button>
                         </div>
                     </div>
                     <hr>
