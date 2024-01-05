@@ -1,0 +1,52 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 51%, rgba(134, 235, 255, 1) 100%);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90%; /* 100% of the viewport height */
+    margin: 0; /* Remove default margin */
+}
+
+.card-body {
+    max-width: 40%;
+    width: 100%; /* Add width to ensure responsiveness */
+    margin: auto; /* Add auto margin to center the card */
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px; /* Add padding for better appearance */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.p-5 .text-center a {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.p-5 h1 {
+    font-weight: 700;
+}
+
+.p-5 {
+    width: 100%;
+}
+
+@media screen and (max-width: 850px) {
+    body {
+        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(87, 223, 255, 1) 100%) no-repeat;
+        height: 80%;
+    }
+
+    .card-body {
+        max-width: 80%; /* Use max-width instead of width */
+    }
+
+    .p-5 input {
+        width: 100%;
+    }
+}

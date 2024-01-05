@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./component/css/style.css">
+    <link rel="stylesheet" href="./component/css/style-login.css">
 </head>
 
 <body>
 
-    <div class="card-body p-0 mx-auto login-form shadow p-3 mb-5 bg-body-tertiary"
+    <div class="card-body p-0 mx-auto login-form shadow p-3"
         style="width: max-content; height: max-content">
         <!-- Nested Row within Card Body -->
         <div class="p-5 ">
@@ -36,6 +36,7 @@
                 <a class="small" href="register.php">Buat Akun</a>
             </div>
         </div>
+    </div>
         </shadow>
 </body>
 

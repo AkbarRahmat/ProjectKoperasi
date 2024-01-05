@@ -20,6 +20,7 @@ if (isset($_SESSION["email"])) {
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'>
         <title>User Profile</title>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css'>
+        <link rel="stylesheet" href="./component/css/style-media.css">
         <style>
             body {
                 display: flex;
@@ -29,8 +30,7 @@ if (isset($_SESSION["email"])) {
     </head>
 
     <body>
-        <?php require_once "./component/sidebar.php";
-         Sidebar::selection("dashboard"); ?>
+        <?php require_once "./component/sidebar.php" ?>
 
         <div>
             <h1>Selamat datang di profil</h1>

@@ -78,6 +78,11 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
+    <header>        
+        <h1>Koperasi <span>Wiatakarya Sejahtera</span></h1>
+    </header>
+    
+    <main>
     <?php require_once "./component/sidebar.php";
     Sidebar::selection("pinjaman"); ?>
 
@@ -120,10 +125,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <td>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#editModal<?= $row['ID_Pinjaman'] ?>">
-                                        Edit
-                                    </button> |
+                                        <i class="ri-pencil-line"></i>
+                                    </button> 
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal<?= $row['ID_Pinjaman'] ?>">Hapus</button>
+                                        data-bs-target="#deleteModal<?= $row['ID_Pinjaman'] ?>"><i class="ri-delete-bin-line"></i>
+                                    </button>
                                 </td>
                             <?php endif; ?>
                         </tr>
@@ -146,8 +152,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 </div>
                                 <form class="row g-3" method="POST" action="./backend/aksi_pinjaman.php">
 
-                                    <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>"></td>
-                                    <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
+                                    <input type="hidden" name="ID_Pinjaman" value="<?= $row['ID_Pinjaman'] ?>">
+                                    <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
+                                    <input type="hidden" name="Nama_Anggota" value="<?= $row['Nama_Anggota'] ?>">
 
                                     <div class="col-md-10 mx-auto p-2">
                                         <label class="form-label">Jumlah pinjaman:</label>
@@ -226,55 +233,44 @@ while ($row = mysqli_fetch_assoc($result)) {
                             </div>
                             <form method="POST" action="./backend/aksi_pinjaman.php">
                                 <div class="modal-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <tr>
-                                                <td>ID Anggota:</td>
-                                                <td>
-                                                    <input type="text" name="ID_Anggota" value="<?php echo $idAnggota; ?>"
-                                                        readonly>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama Anggota:</td>
-                                                <td>
-                                                    <input type="text" name="Nama_Anggota"
-                                                        value="<?php echo $namaAnggota; ?>" readonly>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jumlah Pinjaman:</td>
-                                                <td>Rp <input type="number" name="Jumlah_Pinjaman"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tanggal Pinjaman:</td>
-                                                <td><input type="date" name="Tanggal_Pinjaman"></td>
-                                            </tr>
-                                        </table>
+
+                                        <input type="hidden" name="ID_Anggota" value="<?php echo $idAnggota; ?>">
+                                        <input type="hidden" name="Nama_Anggota" value="<?php echo $namaAnggota; ?>">
+                                            
+                                        <div class="col-md-10 mx-auto p-2">
+                                            <label class="form-label">Jumlah pinjaman:</label>
+                                            <input type="number" class="form-control" name="Jumlah_Pinjaman">
+                                        </div>
+                                        <div class="col-md-10 mx-auto p-2">
+                                            <label class="form-label">Tanggal pinjaman:</label>
+                                            <input type="date" class="form-control" name="Tanggal_Pinjaman">
+                                        </div>
+                                       
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" name="bpinjam">pinjam</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" name="bpinjam">pinjam</button>
-                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        <?php endif; ?>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        const myModal = document.getElementById('myModal')
-        const myInput = document.getElementById('myInput')
+        <?php endif; ?>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            const myModal = document.getElementById('myModal')
+            const myInput = document.getElementById('myInput')
 
-        myModal.addEventListener('shown.bs.modal', () => {
-            myInput.focus()
-        })
+            myModal.addEventListener('shown.bs.modal', () => {
+                myInput.focus()
+            })
 
-    </script>
+        </script>
+    </main>
 </body>
 
 </html>

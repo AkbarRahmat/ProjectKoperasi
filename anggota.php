@@ -52,8 +52,13 @@ while ($row = mysqli_fetch_assoc($result)) {
     <title>Data Anggota</title>
    
 </head>
-
+    
 <body>
+    <header>        
+        <h1>Koperasi <span>Wiatakarya Sejahtera</span></h1>
+    </header>
+    
+    <main>
     <?php
     require_once "./component/sidebar.php";
     Sidebar::selection("anggota") ?>
@@ -62,7 +67,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <h2>Data Anggota</h2>
         <div class="card shadow mb-4">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered w-100" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>ID Anggota</th>
@@ -114,10 +119,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <td>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
-                                        Edit
-                                    </button> |<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        <i class="ri-pencil-line"></i>
+                                    </button> 
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
-                                        Hapus
+                                        <i class="ri-delete-bin-line"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -234,6 +240,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         })
 
     </script>
+    </main>
 </body>
 
 </html>

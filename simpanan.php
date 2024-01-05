@@ -66,6 +66,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
+    <header>
+        <h1>Koperasi <span>Wiatakarya Sejahtera</span></h1>
+    </header>
+    <main>
     <?php require_once "./component/sidebar.php";
     Sidebar::selection("simpanan"); ?>
 
@@ -111,11 +115,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <td>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#editSimpan<?= $row['ID_Simpanan'] ?>">
-                                        Edit
-                                    </button> |
+                                        <i class="ri-pencil-line"></i>
+                                    </button>  
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal<?= $row['ID_Simpanan'] ?>">
-                                        Hapus
+                                        <i class="ri-delete-bin-line"></i>
                                     </button>
                                 </td>
                             <?php endif; ?>
@@ -136,9 +140,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         aria-label="Close"></button>
                                 </div>
                                 <form method="POST" action="./backend/aksi_simpanan.php">
-                                    <input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>"></td>
-                                    <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>"></td>
-
+                                    <input type="hidden" name="ID_Simpanan" value="<?= $row['ID_Simpanan'] ?>">
+                                    <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
+                                    <input type="hidden" name="Nama_Anggota" value="<?= $row['Nama_Anggota'] ?>">
+                                    
                                     <div class="col-md-10 mx-auto p-2">
                                         <label class="form-label">Jumlah Simpanan:</label>
                                         <input type="number" class="form-control" name="Jumlah_Simpanan"
@@ -272,6 +277,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             myInput.focus()
         })
     </script>
+    </main>
 </body>
 
 </html>
