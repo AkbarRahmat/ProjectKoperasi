@@ -38,7 +38,7 @@ class Sidebar
     <?php function sidebarElement($select, $data, $username)
     { ?>
      <div id="desktop-template">
-        <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px; height: 80vh;">
+        <div class="d-flex flex-column flex-shrink-0 p-0" style="width: 200px; height: 78vh;">
             <br>
             <ul class="nav nav-pills flex-column mb-auto">
                 <?php foreach ($data as $key => $value): ?>
@@ -71,7 +71,7 @@ class Sidebar
         </div>
     </div>
     <div id="mobile-template">
-        <div class="mobile d-flex flex-column-reverse flex-shrink-0 h-auto" style="width: 4.5rem;">
+        <div class="mobile d-flex flex-column-reverse flex-shrink-0 h-auto" style="width: 4 rem;">
             <ul class="menu nav nav-pills nav-flush flex-column mb-auto text-center">
                 <?php foreach ($data as $key => $value): ?>
                     <li class="nav-item">
