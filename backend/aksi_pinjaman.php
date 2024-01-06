@@ -8,16 +8,21 @@ if(isset($_POST['bpinjam'])){
     $jumlahPinjaman = $_POST['Jumlah_Pinjaman'];
     $tanggalPinjaman = $_POST['Tanggal_Pinjaman'];
     
-    $query_wajib_simpanan = "SELECT * FROM simpanan WHERE ID_Anggota = '$idAnggota' AND Jenis_Simpanan = 'Wajib' LIMIT 1";
+    $query_wajib_simpanan = "SELECT * FROM simpanan WHERE Status_Deleted = 0 AND ID_Anggota = '$idAnggota' AND Jenis_Simpanan = 'Wajib' LIMIT 1";
     $result_wajib_simpanan = mysqli_query($db_connect, $query_wajib_simpanan);
     $data_wajib_simpanan = mysqli_fetch_assoc($result_wajib_simpanan);
     
-    $queryTotalSimpananUser = "SELECT SUM(Jumlah_Simpanan) as total_simpanan_user FROM simpanan WHERE ID_Anggota = '$idAnggota'";
+    $queryTotalSimpananUser = "SELECT SUM(Jumlah_Simpanan) as total_simpanan_user FROM simpanan WHERE Status_Deleted = 0 AND ID_Anggota = '$idAnggota'";
     $resultTotalSimpananUser = mysqli_query($db_connect, $queryTotalSimpananUser);
+
     $rowTotalSimpananUser = mysqli_fetch_assoc($resultTotalSimpananUser);
     $totalSimpananUser = $rowTotalSimpananUser['total_simpanan_user'];
-    
-    if ($totalSimpananUser <= 75000 ){
+
+    // var_dump ($data_wajib_simpanan);
+
+    // echo $totalSimpananUser;
+    //  exit();
+    if ($totalSimpananUser < 75000 ){
         $totalSimpananUser = $totalSimpananUser - $jumlahPinjaman;
         echo "<script>
         alert('Lakukan simpanan wajib dengan nominal Rp 75000!');
