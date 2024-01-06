@@ -1,11 +1,11 @@
 <?php
 session_start();
 require_once "./config/db.php";
+include_once "./component/sidebar.php";
 
 if (isset($_SESSION["email"])) {
     $username = $_SESSION["username"];
     $role = $_SESSION["role"];
-    include_once "./component/sidebar.php";
 }
     ?>
     <!DOCTYPE html>

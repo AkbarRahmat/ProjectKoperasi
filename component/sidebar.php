@@ -30,6 +30,10 @@ class Sidebar
                 "anggota" => ["Kelola data Anggota", "ri-database-line"]
             ];
         }
+        if(!array_key_exists($select, self::$menuList)){
+            header("Location:index.php");
+            die;
+        }
 
         return sidebarElement($select, self::$menuList, $username);
     }
@@ -65,7 +69,7 @@ class Sidebar
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="./login.php">Sign out</a></li>
+                    <li><a class="dropdown-item" href="./backend/logout.php">Sign out</a></li>
                 </ul>
             </div>
         </div>

@@ -53,7 +53,7 @@ require_once "./config/db.php";
 
 
     // Retrieve the latest unpaid loan
-    $query_latest_loan = "SELECT * FROM pinjaman WHERE ID_Anggota = '$idAnggota' AND Status != 'Dibayar' ORDER BY Tanggal_Pinjaman DESC LIMIT 1";
+    $query_latest_loan = "SELECT * FROM pinjaman WHERE Status_Deleted = 0 AND ID_Anggota = '$idAnggota' AND Status != 'Dibayar' ORDER BY Tanggal_Pinjaman DESC LIMIT 1";
     $result_latest_loan = mysqli_query($db_connect, $query_latest_loan);
 
     if (!$result_latest_loan || mysqli_num_rows($result_latest_loan) == 0) {
@@ -79,7 +79,7 @@ require_once "./config/db.php";
         $nominal_pembayaran = $_POST['nominal_pembayaran'];
     
         // Update the loan status to 'Dibayar'
-        $query_update_status = "UPDATE pinjaman SET Status = 'Dibayar' WHERE ID_Pinjaman = '{$latest_loan['ID_Pinjaman']}'";
+        $query_update_status = "UPDATE pinjaman SET Status = 'Dibayar' WHERE Status_Pinjaman = 0 AND ID_Pinjaman = '{$latest_loan['ID_Pinjaman']}'";
         mysqli_query($db_connect, $query_update_status);
     
         // Add a record to the payment history (you may need a separate table for this)
