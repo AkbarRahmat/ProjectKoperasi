@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $username = $_POST["username"];
     $password = $_POST["password"]; 
-    $sql = "INSERT INTO anggota (Nama, NIK, Alamat, Tanggal_Lahir, Gender, No_Telepon, email, Username, Password, Create_Date, Status)
+    $sql = "INSERT INTO anggota (Nama, NIK, Alamat, Tanggal_Lahir, Gender, No_Telepon, Email, Username, Password, Create_Date, Status)
             VALUES ('$nama', '$nik', '$alamat', '$tanggal_lahir', '$gender', '$no_telepon', '$email', '$username', '$password', NOW(), 'Aktif')";
  
     $result = mysqli_query($db_connect, $sql);

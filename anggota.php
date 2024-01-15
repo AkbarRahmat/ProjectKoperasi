@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "./config/db.php";
+require_once "./component/modal_sidebar/modal.php";
 
 if (!isset($_SESSION['username'])) {
     // Redirect to the login page or handle the case when the user is not logged in
@@ -39,124 +40,15 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<?php Class ModalAnggota extends Modal {
+    static public function edit($row) {
+        return elementModalEdit($row);
+    }
 
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
-    <link rel="stylesheet" href="./component/css/style-media.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Anggota</title>
-</head>
+}?>
 
-<body>
-    <header>
-        <h1>Koperasi <span>Wiatakarya Sejahtera</span></h1>
-    </header>
-
-    <main>
-        <?php
-        require_once "./component/sidebar.php";
-        Sidebar::selection("anggota") ?>
-
-        <div class="container">
-            <h2>Data Anggota</h2>
-                <div class="card shadow mb-4">
-                    <form method="POST">
-                        <div class="input-group-mb-3">
-                            <i class="ri-search-line"></i>    
-                            <input type="text" name="tcari" class="form-control w-50% " placeholder="Cari Nama atau Nik disini!">
-                            <button class="btn btn-primary" name="bcari" type="submit">
-                            <i class="ri-search-line"></i>    
-                            Cari</button>
-                            <button class="btn btn-danger" name="breset" type="submit">
-                            <i class="ri-delete-bin-line"></i>
-                            Reset</button>
-                        </div>
-                    </form>
-                    <div class="table-responsive">
-                        <table class="table table-bordered w-100" id="example" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>ID Anggota</th>
-                                    <th>Nama</th>
-                                    <th>Alamat</th>
-                                    <th>Tanggal Lahir</th>
-                                    <th>NIK</th>
-                                    <th>Gender</th>
-                                    <th>Nomor <br> Telepon</th>
-                                    <th>Email</th>
-                                    <th>Password</th>
-                                    <th>Status <br> Anggota</th>
-                                    <th>Aksi</th>
-                                </tr>
-                                <?php 
-                                if(isset($_POST['bcari'])){
-                                    $keyword = $_POST['tcari'];
-                                    $x = "SELECT * FROM anggota WHERE NIK like '%$keyword%' or Nama like '%$keyword%' order by ID_Anggota desc "; 
-                                }else{
-                                    $x = "SELECT * FROM anggota order by ID_Anggota desc ";
-                                }
-                                
-                                $dataAnggota = mysqli_query($db_connect, $x);
-                                ?>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($dataAnggota as $row): ?>
-                                    <tr>
-                                        <td>
-                                            <?= $row['ID_Anggota'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Nama'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Alamat'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Tanggal_Lahir'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['NIK'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Gender'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['No_Telepon'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Email'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Password'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['Status'] ?>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
-                                                <i class="ri-pencil-line"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal<?= $row['ID_Anggota'] ?>">
-                                                <i class="ri-delete-bin-line"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- edit -->
-                    <div>
-                        <?php foreach ($dataAnggota as $row): ?>
-                            <div class="modal fade" id="editModal<?= $row['ID_Anggota'] ?>" tabindex="-1"
+<?php function elementModalEdit($row) {?>
+    <div class="modal fade" id="editModal<?= $row['ID_Anggota'] ?>" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -231,33 +123,158 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     </div>
                                 </div>
                             </div>
-                            <!-- modal delete -->
-                            <div class="modal fade" id="deleteModal<?= $row['ID_Anggota'] ?>" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="deleteModal<?= $row['ID_Anggota'] ?>">Modal
-                                                title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form action="./backend/aksi_dataAnggota.php" method="POST">
-                                            <div>
-                                                <input type="hidden" name="ID_Anggota" value="<?= $row['ID_Anggota'] ?>">
-                                            </div>
-                                            <div class="modal-body">
-                                                Apakah anda yakin menghapus data pinjaman?
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                                                name="bhapus">Hapus</button>
-                                            <button type="button" class="btn btn-danger"
-                                                data-bs-dismiss="modal">Kembali</button>
-                                        </form>
-                                    </div>
+<?php } ?>
 
-                                </div>
-                            </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
+    <link rel="stylesheet" href="./component/css/style-media.css">
+  	<link rel="icon" href="./bank-line.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Anggota</title>
+    <style>
+        .search{
+            width: 50%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .search button{
+            width: 20%;
+            height: 20%;
+            margin: 10px 5px ;
+          	font-size: 15px;
+        } 
+
+        @media (max-width: 767px) {
+        .container{
+          width:80%;
+          height:80%;
+          }
+        .search{
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .search button{
+            width: 50%;
+            height: auto;
+            margin: 20px 20px;
+        }
+        
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Koperasi <span>Wiatakarya Sejahtera</span></h1>
+    </header>
+
+    <main>
+        <?php
+        require_once "./component/modal_sidebar/sidebar.php";
+        Sidebar::selection("anggota") ?>
+
+        <div class="container">
+            <h2>Data Anggota</h2>
+                <div class="card shadow mb-4">
+                    <form method="POST">
+                        <div class="search input-group-mb-3">
+                            <br>
+                            <input type="text" name="tcari" class="form-control m-3" placeholder="Cari Nama atau Nik disini!">
+                            <button class="btn btn-primary p-1 " name="bcari" type="submit">
+                            <i class="ri-search-line"></i>    
+                            Cari</button>
+                            <button class="btn btn-danger p-1 " name="breset" type="submit">
+                            <i class="ri-loop-left-line"></i>
+                            Reset</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-bordered w-100" id="example" width="100%" cellspacing="0">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>ID Anggota</th>
+                                    <th>Nama</th>
+                                    <th>Alamat</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>NIK</th>
+                                    <th>Gender</th>
+                                    <th>Nomor <br> Telepon</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Status <br> Anggota</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                <?php 
+                                if(isset($_POST['bcari'])){
+                                    $keyword = $_POST['tcari'];
+                                    $x = "SELECT * FROM anggota WHERE NIK like '%$keyword%' or Nama like '%$keyword%' order by ID_Anggota desc "; 
+                                }else{
+                                    $x = "SELECT * FROM anggota order by ID_Anggota desc ";
+                                }
+                                
+                                $dataAnggota = mysqli_query($db_connect, $x);
+                                ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($dataAnggota as $row): ?>
+                                    <tr>
+                                        <td>
+                                            <?= $row['ID_Anggota'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Nama'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Alamat'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Tanggal_Lahir'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['NIK'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Gender'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['No_Telepon'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Email'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Password'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['Status'] ?>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#editModal<?= $row['ID_Anggota'] ?>">
+                                                <i class="ri-pencil-line"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- edit -->
+                    <div>
+                        <?php foreach ($dataAnggota as $row): ?>
+                            <?php ModalAnggota::edit($row) ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -273,8 +290,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             myModal.addEventListener('shown.bs.modal', () => {
                 myInput.focus()
             })
-
-            new DataTable('#example');
+          
         </script>
     </main>
 </body>

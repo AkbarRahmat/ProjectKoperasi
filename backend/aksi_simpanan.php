@@ -47,7 +47,17 @@ if(isset($_POST['bedit'])){
     $query = "UPDATE simpanan SET ID_Anggota = '$idAnggota', Nama_Anggota = '$namaAnggota', Jumlah_Simpanan = '$jumlahSimpanan', Tanggal_Simpanan = '$tanggalSimpanan', Jenis_Simpanan = '$jSimpanan' WHERE ID_Simpanan = '$idSimpananToEdit'";
 
     $resultEditSimpanan = mysqli_query($db_connect, $query);
-    if (!$resultEditSimpanan){die;
+    if (!$resultEditSimpanan){
+        echo "<script>
+        alert('Edit Simpanan Gagal!');
+        document.location='../simpanan.php';
+        </script>";die;
+    }else{
+        echo "<script>
+        alert('Edit Simpanan Berhasil!');
+        document.location='../simpanan.php';
+        </script>";
+        die;
     }
 
 }
@@ -61,6 +71,7 @@ if(isset($_POST['bhapus'])){
         alert('Hapus data gagal!');
         document.location='../simpanan.php';
         </script>";
+        die;
     }else{
         $queryTotalSimpanan = "SELECT SUM(Jumlah_Simpanan) as total_simpanan FROM simpanan";
         $resultTotalSimpanan = mysqli_query($db_connect, $queryTotalSimpanan);
@@ -73,6 +84,7 @@ if(isset($_POST['bhapus'])){
         alert('Hapus data berhasil!');
         document.location='../simpanan.php';
         </script>";
+        die;
     }
 }
 

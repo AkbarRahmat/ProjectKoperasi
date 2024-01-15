@@ -53,6 +53,7 @@ header span{
     }
     .container {
         display: inline-block;
+      	width: 80%;
     }
     
     header h1{

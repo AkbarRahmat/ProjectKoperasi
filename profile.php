@@ -25,6 +25,24 @@ if (isset($_SESSION["email"])) {
         <title>User Profile</title>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css'>
         <link rel="stylesheet" href="./component/css/style-profile.css">
+      	<link rel="icon" href="./bank-line.png" type="image/x-icon">
+        <style>
+
+              .logout a{
+                  background-color: #0080ff;
+                  color: white;
+                  width: 50%;
+                  padding: 15px;
+                  border-radius: 20px;
+                  text-align: center; 
+                  transition: all 0.1s ease;
+              }
+
+              .logout a:hover{
+                  box-shadow: none;
+                  background-color: #0070e0;
+              }
+          </style>
     </head>
 
     <body>
@@ -33,7 +51,7 @@ if (isset($_SESSION["email"])) {
         </header>
 
         <main>
-            <?php require_once "./component/sidebar.php";
+            <?php require_once "./component/modal_sidebar/sidebar.php";
             Sidebar::selection("dashboard"); ?>
 
             <div class="container">
@@ -70,12 +88,12 @@ if (isset($_SESSION["email"])) {
 
                     <?php
                     if ($role == 'admin') {
-                        $queryTotalPinjaman = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman FROM pinjaman";
+                        $queryTotalPinjaman = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman FROM pinjaman WHERE Status_Deleted = 0  AND Status = 'Disetujui'";
                         $resultTotalPinjaman = mysqli_query($db_connect, $queryTotalPinjaman);
                         $rowTotalPinjaman = mysqli_fetch_assoc($resultTotalPinjaman);
                         $totalPinjamanSeluruhAnggota = $rowTotalPinjaman['total_pinjaman'];
 
-                        $queryTotalSimpanan = "SELECT SUM(Jumlah_Simpanan) as total_simpanan FROM simpanan";
+                        $queryTotalSimpanan = "SELECT SUM(Jumlah_Simpanan) as total_simpanan FROM simpanan WHERE Status_Deleted = 0";
                         $resultTotalSimpanan = mysqli_query($db_connect, $queryTotalSimpanan);
                         $rowTotalSimpanan = mysqli_fetch_assoc($resultTotalSimpanan);
                         $totalSimpananSeluruhAnggota = $rowTotalSimpanan['total_simpanan'];
@@ -94,15 +112,20 @@ if (isset($_SESSION["email"])) {
                         </tr>
 
                     <?php } else {
-                        $queryTotalPinjamanUser = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman_user FROM pinjaman WHERE Nama_Anggota = '$username'";
-                        $resultTotalPinjamanUser = mysqli_query($db_connect, $queryTotalPinjamanUser);
-                        $rowTotalPinjamanUser = mysqli_fetch_assoc($resultTotalPinjamanUser);
-                        $totalPinjamanUser = $rowTotalPinjamanUser['total_pinjaman_user'];
+                      	$query_user_info = "SELECT ID_Anggota, Nama FROM anggota WHERE Username = '$username'";
+                		$result_user_info = mysqli_query($db_connect, $query_user_info);
+                		$user_info = mysqli_fetch_assoc($result_user_info);
+                		$idAnggota = $user_info['ID_Anggota'];
+                      
+                        $queryTotalPinjamanUser = "SELECT SUM(Jumlah_Pinjaman) as total_pinjaman_user FROM pinjaman WHERE ID_Anggota = '$idAnggota' AND Status_Deleted = 0 AND Status = 'Disetujui'"; 
+                		$resultTotalPinjamanUser = mysqli_query($db_connect, $queryTotalPinjamanUser);
+                		$rowTotalPinjamanUser = mysqli_fetch_assoc($resultTotalPinjamanUser);
+                		$totalPinjamanUser = $rowTotalPinjamanUser['total_pinjaman_user'];
 
-                        $queryTotalSimpananUser = "SELECT SUM(Jumlah_Simpanan) as total_simpanan_user FROM simpanan WHERE Nama_Anggota = '$username'";
-                        $resultTotalSimpananUser = mysqli_query($db_connect, $queryTotalSimpananUser);
-                        $rowTotalSimpananUser = mysqli_fetch_assoc($resultTotalSimpananUser);
-                        $totalSimpananUser = $rowTotalSimpananUser['total_simpanan_user'];
+                   		$queryTotalSimpananUser = "SELECT SUM(Jumlah_Simpanan) as total_simpanan_user FROM simpanan WHERE ID_Anggota = '$idAnggota' AND Status_Deleted = 0";
+                		$resultTotalSimpananUser = mysqli_query($db_connect, $queryTotalSimpananUser);
+                		$rowTotalSimpananUser = mysqli_fetch_assoc($resultTotalSimpananUser);
+                		$totalSimpananUser = $rowTotalSimpananUser['total_simpanan_user'];
                         ?>
                         <tr>
                             <td>Total Pinjaman Anda</td>

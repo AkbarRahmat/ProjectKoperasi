@@ -30,23 +30,7 @@ if (isset($_POST['bedit'])) {
         alert('Edit data berhasil!');
         document.location='../anggota.php';
         </script>";
-    }
-}
-if(isset($_POST['bhapus'])){
-    $idAnggota = $_POST['ID_Anggota'];
-    $queryDeleteAnggota = "UPDATE anggota SET Status_Deleted = 1 WHERE ID_Anggota = '$idAnggota'";
-    $hapus = mysqli_query($db_connect, $queryDeleteAnggota);
-    
-    if(!$hapus){
-        echo "<script>
-        alert('Hapus data gagal!');
-        document.location='../anggota.php';
-        </script>";
-    }else{
-        echo "<script>
-        alert('Hapus data berhasil!');
-        document.location='../anggota.php';
-        </script>";
+      die;
     }
 }
 

@@ -63,14 +63,13 @@ main a{
     width: 50%;
     padding: 15px;
     border-radius: 20px;
-    text-align: center;
-    transition: all 0.2s ease-in-out;
+    text-align: center; 
+
 }
 
 .logout a:hover{
-    background-color: #64b2ff;
-    color: white;
-    box-shadow: 0 0 10px 1px #0080ff;
+    box-shadow: none;
+    background-color: #0070e0;
 }
 
 @media (min-width: 768px) {

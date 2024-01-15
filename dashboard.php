@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "./config/db.php";
-include_once "./component/sidebar.php";
+include_once "./component/modal_sidebar/sidebar.php";
 
 if (isset($_SESSION["email"])) {
     $username = $_SESSION["username"];
@@ -19,6 +19,7 @@ if (isset($_SESSION["email"])) {
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.6.0/remixicon.css">
         <link rel="stylesheet" href="./component/css/style-media.css">
+        <link rel="icon" href="./bank-line.png" type="image/x-icon">
         <style>
             .col-xl-3 {
                 position: relative;
@@ -293,6 +294,7 @@ if (isset($_SESSION["email"])) {
                 $resultTotalSimpananUser = mysqli_query($db_connect, $queryTotalSimpananUser);
                 $rowTotalSimpananUser = mysqli_fetch_assoc($resultTotalSimpananUser);
                 $totalSimpananUser = $rowTotalSimpananUser['total_simpanan_user'];
+
                 ?>
 
                 <div class="container">
@@ -338,6 +340,37 @@ if (isset($_SESSION["email"])) {
                                 </div>
                             </div>
                         </div>
+                        <?php 
+                        $queryDue = "SELECT Jatuh_Tempo FROM pinjaman WHERE ID_Anggota = '$idAnggota' AND Status = 'Disetujui' AND Status_Deleted = 0";
+                        $resultDue = mysqli_query($db_connect, $queryDue);
+                        $rowDue = mysqli_fetch_assoc($resultDue);
+                        if ($rowDue) {
+                            $jatuhTempo = $rowDue['Jatuh_Tempo'];
+                            echo '<div class="col-xl-3 col-md-6 mb-4 w-100 h-auto">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Segera lakukan pembayaran pinjaman anda sebelum
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-red-800">
+                                                ' . $jatuhTempo . ' 
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+                        } else {
+                            $jatuhTempo = null;
+                        }
+        
+                        ?>
+                       
                     </div>
 
                     <div class="artikel">
